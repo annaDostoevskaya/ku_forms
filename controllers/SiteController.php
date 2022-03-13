@@ -125,4 +125,10 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
+
+
+    public function actionGoogleSignIn()
+    {
+        return $this->render('google-sign-in');
+    }
 }

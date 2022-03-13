@@ -6,8 +6,9 @@ protected/runtime/*
 protected/data/*.db
 themes/classic/views/
 
-# phpstorm project files
+# phpstorm and VS project files
 .idea
+.vs
 
 # netbeans project files
 nbproject
