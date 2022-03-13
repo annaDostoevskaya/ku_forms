@@ -40,3 +40,10 @@ tests/_support/_generated
 
 #vagrant folder
 /.vagrant
+
+#env vars.
+setup_var.bat
+client_secret_292373252634-li1g8ehvgd21lddqj6fabv1965g0tn3c.apps.googleusercontent.com.json
+
+#logs
+kuforms.log
