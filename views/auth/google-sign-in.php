@@ -7,7 +7,7 @@ use yii\helpers\Html;
 <html lang="en">
   <head>
     <meta name="google-signin-scope" content="profile email">
-    <meta name="google-signin-client_id" content=<?= $google_api_key?>>
+    <meta name="google-signin-client_id" content=<?= $google_client_id?>>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
   </head>
   <body>
@@ -16,7 +16,7 @@ use yii\helpers\Html;
       function onSignIn(googleUser) {
         var profile = googleUser.getBasicProfile();
 
-        $.post("http://localhost:8080/index.php?r=auth/google-sign-in-redirect", 
+        $.post("/index.php?r=auth/google-sign-in-redirect", 
             {
               // TODO(annad): It is just testing api. We must rebuild it.
               // Useful data for your client-side scripts:
@@ -29,6 +29,8 @@ use yii\helpers\Html;
               "google_token" : googleUser.getAuthResponse().id_token, // The ID token you need to pass to your backend:
             }
           );
+
+        document.cookie = ("google_token=" + googleUser.getAuthResponse().id_token);
       }
     </script>
   </body>
