@@ -13,6 +13,7 @@ class AuthController extends Controller
 {
     public function actionGoogleSignIn()
     {
+        $this->view->title = 'Sign In'; // TODO(annad): Do it for other
     	$google_client_id = getenv('GOOGLE-CLIENT-ID');
         return $this->render('google-sign-in', ['google_client_id' => $google_client_id]);
     }
@@ -36,7 +37,9 @@ class AuthController extends Controller
     private function _googleCheckToken()
     {
         // https://oauth2.googleapis.com/tokeninfo?id_token=123456789ABCDYFG
+
     }
+
 }
 
 ?>

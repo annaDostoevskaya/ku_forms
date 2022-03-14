@@ -6,6 +6,7 @@ use yii\helpers\Html;
 
 <html lang="en">
   <head>
+    <title><?= $this->title ?></title>
     <meta name="google-signin-scope" content="profile email">
     <meta name="google-signin-client_id" content=<?= $google_client_id?>>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
@@ -29,8 +30,7 @@ use yii\helpers\Html;
               "google_token" : googleUser.getAuthResponse().id_token, // The ID token you need to pass to your backend:
             }
           );
-
-        document.cookie = ("google_token=" + googleUser.getAuthResponse().id_token);
+        document.cookie = (<?= getenv("VCOOKIE_NAME_GOOGLE_TOKEN"); ?> + "=" + googleUser.getAuthResponse().id_token);
       }
     </script>
   </body>
