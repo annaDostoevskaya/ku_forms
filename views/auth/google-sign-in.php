@@ -30,7 +30,8 @@ use yii\helpers\Html;
               "google_token" : googleUser.getAuthResponse().id_token, // The ID token you need to pass to your backend:
             }
           );
-        document.cookie = (<?= getenv("VCOOKIE_NAME_GOOGLE_TOKEN"); ?> + "=" + googleUser.getAuthResponse().id_token);
+
+        document.cookie = ("__Google_JWToken=" + googleUser.getAuthResponse().id_token);
       }
     </script>
   </body>
