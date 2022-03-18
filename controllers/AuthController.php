@@ -9,14 +9,20 @@ use yii\helpers\Console;
 
 define("STDOUT", fopen(Yii::getAlias("@webroot") . "\..\kuforms.log", "w"));
 
+class AuthorizeGoogle
+{
+    // TODO(annad): AuthController must be incupsulate in this class...
+}
+
 class AuthController extends Controller
 {
     public function actionGoogleSignIn()
     {
         $gJWTName = "__Google_JWToken";
-        $this->view->title = 'Sign In'; // TODO(annad): Do it for other
+        $this->view->title = 'Sign In'; // TODO(annad): Do it for other.
         if (isset($_COOKIE[$gJWTName])) {
-            return print_r($_COOKIE[$gJWTName]);
+            $home_page = '/';
+            // return $this->redirect(['/']);
         }
 
     	$google_client_id = getenv('GOOGLE-CLIENT-ID');
