@@ -37,12 +37,11 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav'],
         'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
             // TODO(annad): Incapsulate it in specific file.
             isset(Yii::$app->request->cookies[(getenv('GOOGLE-NAME-COOKIE-STORAGING-JWT'))]) ? (
                 ['label' => 'Logout', 'url' => ['/site/logout']]
             ) : ( 
-                ['label' => 'Login', 'url' => ['/site/login']]
+                ['label' => 'Login with Google', 'url' => ['/site/login']]
             )
         ],
     ]);

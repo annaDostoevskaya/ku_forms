@@ -1,1 +1,1 @@
-[ index.php ]
+<a href="/index.php?r=site/form">Get Started</a>

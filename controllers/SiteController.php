@@ -1,6 +1,7 @@
 <?php
-
 namespace app\controllers;
+
+
 
 use Yii;
 use yii\web\Controller;
@@ -67,9 +68,56 @@ function checkJWTGoogle()
     return $payload;
 }
 
-
 class SiteController extends Controller
 {
+    public static $Form_Table = [
+
+        'id' => 0,
+        'date' => '03/20/2022',
+        'author' => 'Anna',
+        'author_email' => 'me@example.com',
+
+        'subject' => 'My First Forms',
+        'questions_count' => 3,
+
+        // misc...
+
+            // ...
+            // This data storage in SQL table as NoSQL data. In JSON format and
+            // later we decode it.
+        'questions' => '{
+            "0" : {
+                "tag" : "input",
+                "type" : "text",
+                "options" : {
+                    "required" : "true"
+                },
+                "content" : "What\' your name?"
+            },
+
+            "1" : {
+                "tag" : "input",
+                "type" : "date",
+                "content" : "How old are you?"
+            },
+            
+            "2" : {
+                "tag" : "input",
+                "type" : "email",
+                "content" : "please, give your e-mail:"
+            }
+        }'
+
+    ];
+    // echo print_r($Form_Table) . '<br>' . '<br>' . '<br>';
+    // $array_2 = json_decode($Form_Table['questions'], $associative=true);
+    // echo print_r($array_2['0']['type']);
+
+
+
+
+
+
     public function behaviors()
     {
         return [
@@ -81,27 +129,20 @@ class SiteController extends Controller
     public function actions()
     {
         return [
-
+            'error' => [
+                'class' => 'yii\web\ErrorAction',
+            ],
+            'captcha' => [
+                'class' => 'yii\captcha\CaptchaAction',
+                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+            ],
         ];
     }
 
     public function actionIndex()
     {
+
         return $this->render('index');
-    }
-
-    public function actionPoll($id = 0)
-    {
-
-        $polls = [
-            ["Как вас зовут?", "Сколько вам лет?"],
-        ];
-
-        if($id == 0) {
-            return $this->redirect(Yii::$app->homeUrl, 302)->send();
-        }
-
-        return $this->render('poll', ['poll_content' => $polls[$id - 1]]);
     }
 
     public function actionLogin()
@@ -115,7 +156,7 @@ class SiteController extends Controller
 
         $client = getGoogleClient();
         $urlAuth = $client->createAuthUrl();
-        return $this->render('login', ['url_auth' => $urlAuth]);
+        $this->redirect($urlAuth, 302)->send();
     }
 
     public function actionLogout()
@@ -148,4 +189,38 @@ class SiteController extends Controller
         return $this->redirect(Yii::$app->homeUrl, 302)->send();
     }
 
+    public function actionForm($id = 0)
+    {
+        $payload = checkJWTGoogle();
+        if($payload == KUFORMS_ERROR)
+        {
+            // TODO(annad): Are you want be Anonymous?..
+            return $this->redirect('/index.php?r=site/login', 302)->send();
+        }
+
+        if($id = 0) 
+        {
+            // TODO(annad): I think what we can do?..
+            // $id++;
+        }
+
+        $Form = SiteController::$Form_Table; // request to db...
+
+        return $this->render('form');
+
+        /*
+        if($id == 0) {
+            return $this->redirect(Yii::$app->homeUrl, 302)->send();
+        }
+
+        return $this->render('poll', ['poll_content' => $polls[$id - 1]]);
+        */
+    }
+
+    public function actionSaveResult()
+    {
+        foreach ($_POST as $key => $value) {
+            echo $key . ' = ' . $value . '<br>';
+        }
+    }
 }
