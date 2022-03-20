@@ -1,1 +1,1 @@
-<a href="/index.php?r=site/form">Get Started</a>
+<a href="/index.php?r=forms">Get Started</a>

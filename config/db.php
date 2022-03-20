@@ -1,8 +1,13 @@
 <?php
 
+$path_to_database = __DIR__ . '/../kuforms.db';
+
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=yii2basic',
+
+    // TODO(annad )We must write script for initialize database.
+    'dsn' => 'sqlite:' . $path_to_database, 
+    
     'username' => 'root',
     'password' => '',
     'charset' => 'utf8',
