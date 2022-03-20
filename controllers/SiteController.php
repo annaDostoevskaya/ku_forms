@@ -7,15 +7,27 @@ use Yii;
 use yii\web\Controller;
 use yii\web\Cookie;
 
+use yii\filters\VerbFilter;
+
 require_once __DIR__ . '/../core/google_auth.php';
+
+use core\google_auth;
 
 class SiteController extends Controller
 {
     public function behaviors()
     {
+        return [];
+/*        
         return [
-
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'logout' => ['post'],
+                ],
+            ],
         ];
+*/
     }
 
     public function actions()
@@ -23,11 +35,7 @@ class SiteController extends Controller
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
-            ],
-            'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            ],
+            ]
         ];
     }
 
@@ -38,14 +46,14 @@ class SiteController extends Controller
 
     public function actionLogin()
     {
-        $payload = checkJWTGoogle();
+        $payload = google_auth\checkJWTGoogle();
         if($payload != E_WARNING)
         {
             Yii::info("[ANNAD] Cookies is set.", __METHOD__);
             return $this->redirect(Yii::$app->homeUrl, 302)->send();
         }
 
-        $client = getGoogleClient();
+        $client = google_auth\getGoogleClient();
         $urlAuth = $client->createAuthUrl();
         $this->redirect($urlAuth, 302)->send();
     }
@@ -64,18 +72,17 @@ class SiteController extends Controller
             return E_WARNING;
         }
 
-        $client = getGoogleClient();
+        $client = google_auth\getGoogleClient();
         $accessToken = $client->fetchAccessTokenWithAuthCode($code);
-        $id_token = $accessToken['id_token'];
+        $idToken = $accessToken['id_token'];
 
         $cookies = Yii::$app->response->cookies;
-        
-        $cookie_token_id = new Cookie(
+        $cookieIdToken = new Cookie(
             ['name' => getenv('GOOGLE-NAME-COOKIE-STORAGING-JWT'), 
-            'value' =>  $id_token, 'httpOnly' => true, 'secure' => true]
+            'value' =>  $idToken, 'httpOnly' => true, 'secure' => true]
         );
         
-        $cookies->add($cookie_token_id);
+        $cookies->add($cookieIdToken);
 
         return $this->redirect(Yii::$app->homeUrl, 302)->send();
     }

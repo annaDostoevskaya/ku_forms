@@ -37,11 +37,14 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav'],
         'items' => [
-            // TODO(annad): Incapsulate it in specific file.
-            isset(Yii::$app->request->cookies[(getenv('GOOGLE-NAME-COOKIE-STORAGING-JWT'))]) ? (
+            isset(
+                Yii::$app->request->cookies[
+                    getenv('GOOGLE-NAME-COOKIE-STORAGING-JWT')
+                ]
+            ) ? (
                 ['label' => 'Logout', 'url' => ['/site/logout']]
             ) : ( 
-                ['label' => 'Login with Google', 'url' => ['/site/login']]
+                ['label' => 'Login with Google', 'url' => ['/site/login']] // TODO(annad): method = 'post'
             )
         ],
     ]);

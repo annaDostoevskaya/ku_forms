@@ -3,19 +3,16 @@ use yii\helpers\Html;
 ?>
 
 <?php
-function RendererFrom()
-{
-
-}
+require_once __DIR__ . '/../../core/form_renderer.php';
+use core\form_renderer;
+form_renderer\FormRenderer(); // TODO(annad): This should encapsulate the <div>(<form>) below 
 ?>
 
 <?php 
-
-RendererFrom(); // TODO(annad): This should encapsulate the <div>(<form>) below 
 $Form_Table = \app\models\Form::find()->orderBy('id')->all()[0];
 $questions_collection = json_decode($Form_Table->questions, $associate=true);
-
 ?>
+
 <div>
     <h3><?= $Form_Table->subject; ?></h3>
     <p>
@@ -25,8 +22,8 @@ $questions_collection = json_decode($Form_Table->questions, $associate=true);
     <p>
         <h7><?= $Form_Table->datetime; ?></h7>
     </p>
-
-    <form action="/index.php?r=answers/save&id=<?= Html::encode($Form_Table->id); ?>"
+    <!-- action link must be get from application function. If url manager change it? -->
+    <form action="/index.php?r=answers/save"
           method="post" 
           autocomplete="on">
             <?php
@@ -50,7 +47,10 @@ $questions_collection = json_decode($Form_Table->questions, $associate=true);
         <!-- Hidden tag for security CSRF-Attacks. -->
         <?= Html::hiddenInput(Yii::$app->request->csrfParam, Yii::$app->request->getCsrfToken()); ?><br>
         <input  type="hidden" 
-                name="id_Form_Table"
+                name="questions_count"
+                value=<?= $Form_Table->questions_count; ?>>
+        <input  type="hidden" 
+                name="idForm"
                 value=<?= $Form_Table->id; ?>>
     </form>
 </div>

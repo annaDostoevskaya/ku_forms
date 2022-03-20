@@ -6,6 +6,8 @@ use yii\web\Controller;
 
 require_once __DIR__ . '/../core/google_auth.php';
 
+use core\google_auth;
+
 class FormsController extends Controller
 {
 
@@ -21,20 +23,17 @@ class FormsController extends Controller
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
-            ],
-            'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            ],
+            ]
         ];
     }
 
 	public function actionIndex($id = 0)
 	{
-        $payload = checkJWTGoogle();
+        $payload = google_auth\checkJWTGoogle();
         if($payload == E_WARNING)
         {
             // TODO(annad): Are you want be Anonymous?..
+            // TODO(annad): future='_link' Implement return to startup redirected link.
             return $this->redirect('/index.php?r=site/login', 302)->send();
         }
 
