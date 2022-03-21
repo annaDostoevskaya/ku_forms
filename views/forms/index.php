@@ -8,26 +8,22 @@ use core\form_renderer;
 form_renderer\FormRenderer(); // TODO(annad): This should encapsulate the <div>(<form>) below 
 ?>
 
-<?php 
-$Form_Table = \app\models\Form::find()->orderBy('id')->all()[0];
-$questions_collection = json_decode($Form_Table->questions, $associate=true);
-?>
-
 <div>
-    <h3><?= $Form_Table->subject; ?></h3>
+    <h3><?= $form->subject; ?></h3>
     <p>
-        <h6><?= $Form_Table->author_name; ?></h6>
-        <h6><?= $Form_Table->author_email; ?></h6>
+        <h6><?= $form->author_name; ?></h6>
+        <h6><?= $form->author_email; ?></h6>
     </p>
     <p>
-        <h7><?= $Form_Table->datetime; ?></h7>
+        <h7><?= $form->datetime; ?></h7>
     </p>
     <!-- action link must be get from application function. If url manager change it? -->
     <form action="/index.php?r=answers/save"
           method="post" 
           autocomplete="on">
             <?php
-                for ($i = 0; $i < $Form_Table->questions_count; $i++) {
+                $questions_collection = json_decode($form->questions, $associate = true);
+                for ($i = 0; $i < $form->questions_count; $i++) {
                     $question = $questions_collection[$i];
                     echo '<label ' . 
                          'for='. Html::encode($i) . 
@@ -48,9 +44,9 @@ $questions_collection = json_decode($Form_Table->questions, $associate=true);
         <?= Html::hiddenInput(Yii::$app->request->csrfParam, Yii::$app->request->getCsrfToken()); ?><br>
         <input  type="hidden" 
                 name="questions_count"
-                value=<?= $Form_Table->questions_count; ?>>
+                value=<?= $form->questions_count; ?>>
         <input  type="hidden" 
                 name="idForm"
-                value=<?= $Form_Table->id; ?>>
+                value=<?= $form->id; ?>>
     </form>
 </div>

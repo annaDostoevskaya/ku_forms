@@ -112,22 +112,12 @@ class AnswersController extends Controller
 
     public function actionShow($id = 0)
     {
-        if($id == 0)
-        {
-            return $this->redirect( 
-                Url::toRoute(
-                    ['answers/']
-                ), 
-                302  )->send();
-        }
-
         $answer = Answer::find()
                     ->where(['id' => $id])
                     ->one();
         $form = Form::find()
                     ->where(['id' => $answer->id_form])
                     ->one();
-
 
         return $this->render('show', 
             [
