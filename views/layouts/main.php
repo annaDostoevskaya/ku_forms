@@ -10,6 +10,8 @@ use yii\bootstrap4\Html;
 use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
 
+use yii\helpers\Url;
+
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -42,10 +44,20 @@ AppAsset::register($this);
                     getenv('GOOGLE-NAME-COOKIE-STORAGING-JWT')
                 ]
             ) ? (
-                ['label' => 'Logout', 'url' => ['/site/logout']]
+                '<li>'
+                . Html::beginForm(['/site/logout'], 'post', ['class' => 'form-inline'])
+                . Html::submitButton(
+                    'Logout',
+                    ['class' => 'btn btn-link logout']
+                )
+                . Html::endForm()
+                . '</li>'
             ) : ( 
                 ['label' => 'Login with Google', 'url' => ['/site/login']] // TODO(annad): method = 'post'
-            )
+            ),
+
+            ['label' => 'Answers', 'url' => ['/answers/index']],
+            ['label' => 'Forms', 'url' => ['/site/index']],
         ],
     ]);
     NavBar::end();

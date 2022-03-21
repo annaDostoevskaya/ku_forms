@@ -78,6 +78,12 @@ function getGoogleUserInfo()
     // https://developers.google.com/docs/api/quickstart/php
     // stab.
     $payload = checkJWTGoogle(); 
+
+    if($payload == E_WARNING)
+    {
+        return E_WARNING;
+    }
+
     return [
         'username' => $payload['name'],
         'email' => $payload['email']

@@ -6,6 +6,15 @@ use yii\web\Controller;
 
 use yii\filters\VerbFilter;
 
+use yii\data\Pagination;
+
+use yii\helpers\Url;
+
+use app\models\Answer;
+use app\models\Form;
+
+use DateTime;
+
 require_once __DIR__ . '/../core/google_auth.php';
 
 use core\google_auth;
@@ -33,6 +42,29 @@ class AnswersController extends Controller
         ];
     }
 
+    public function actionIndex()
+    {
+        $answerQuery = Answer::find();
+        
+        $pagination = new Pagination(
+            [
+                'defaultPageSize' => 10,
+                'totalCount' => $answerQuery->count(),
+            ]
+        );
+
+        $answers = $answerQuery->orderBy(['id' => SORT_DESC])
+            ->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
+
+        return $this->render('index', [
+                'answers' => $answers,
+                'pagination' => $pagination,
+            ]
+        );
+    }
+
     public function actionSave()
     {
         $answers = Array();
@@ -47,27 +79,62 @@ class AnswersController extends Controller
 
         $json_answers = json_encode($answers);
 
-        $answer_db = new \app\models\Answer();
+        $answer_db = new Answer();
         $answer_db->id_form = $_POST['idForm'];
         
         $userinfo = google_auth\getGoogleUserInfo();
+
+        if($userinfo == E_WARNING)
+        {
+            return $this->redirect( 
+                Url::toRoute(
+                    ['site/login']
+                ), 
+                302  )->send();
+        }
+
         $answer_db->answerer_name = $userinfo['username'];
         $answer_db->answerer_email = $userinfo['email'];
         
-        $date = new \DateTime('now');
-        $answer_db->datetime = $date->format(\DateTime::ATOM);
+        $date = new DateTime('now');
+        $answer_db->datetime = $date->format(DateTime::ATOM);
         $answer_db->answer = $json_answers;
 
-        // $answer_db->save();
+        $answer_db->save();
 
-        return;
+        return $this->redirect( 
+                Url::toRoute(
+                    ['answers/']
+                ), 
+                302  )->send();
     }
 
 
     public function actionShow($id = 0)
     {
-    	$answer = \app\models\Answer::find()->where(['id' => $id])->one();
-    	return $answer['answer'];
+        if($id == 0)
+        {
+            return $this->redirect( 
+                Url::toRoute(
+                    ['answers/']
+                ), 
+                302  )->send();
+        }
+
+        $answer = Answer::find()
+                    ->where(['id' => $id])
+                    ->one();
+        $form = Form::find()
+                    ->where(['id' => $answer->id_form])
+                    ->one();
+
+
+        return $this->render('show', 
+            [
+                'answer' => $answer, 
+                'form' => $form
+            ]
+        );
     }
 }
 

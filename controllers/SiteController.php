@@ -8,6 +8,9 @@ use yii\web\Controller;
 use yii\web\Cookie;
 
 use yii\filters\VerbFilter;
+use app\models\Form;
+
+use yii\data\Pagination;
 
 require_once __DIR__ . '/../core/google_auth.php';
 
@@ -17,8 +20,6 @@ class SiteController extends Controller
 {
     public function behaviors()
     {
-        return [];
-/*        
         return [
             'verbs' => [
                 'class' => VerbFilter::class,
@@ -27,7 +28,6 @@ class SiteController extends Controller
                 ],
             ],
         ];
-*/
     }
 
     public function actions()
@@ -41,7 +41,25 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        $query = Form::find();
+
+        $pagination = new Pagination(
+            [
+                'defaultPageSize' => 5,
+                'totalCount' => $query->count(),
+            ]
+        );
+
+        $forms = $query->orderBy(['id' => SORT_DESC])
+            ->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
+
+        return $this->render('index', [
+                'forms' => $forms, 
+                'pagination' => $pagination,
+            ]
+        );
     }
 
     public function actionLogin()

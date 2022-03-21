@@ -30,7 +30,7 @@ $questions_collection = json_decode($Form_Table->questions, $associate=true);
                 for ($i = 0; $i < $Form_Table->questions_count; $i++) {
                     $question = $questions_collection[$i];
                     echo '<label ' . 
-                         'for='. Html::encode("q" . (string)$i) . 
+                         'for='. Html::encode($i) . 
                          '>' . Html::encode($i + 1) . 
                          '. ' . Html::encode($question['content']) .
                          '</label>'.
@@ -38,7 +38,7 @@ $questions_collection = json_decode($Form_Table->questions, $associate=true);
 
                     echo '<' . Html::encode($question['tag']) . 
                          ' type=' . Html::encode($question['type']) . 
-                         ' name=' . Html::encode("q" . (string)$i) . '>'.
+                         ' name=' . Html::encode($i) . '>'.
                          '<br><br>';
                 }
             ?>
