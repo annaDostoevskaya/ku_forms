@@ -8,7 +8,7 @@ REM 	call setup_var
 REM )
 REM 
 
-call setup_env
+call .\protected\runtime\setup_env.bat
 yii serve %*
 
 REM TODO(annad): We must write script for initialize database. (! DB !)
