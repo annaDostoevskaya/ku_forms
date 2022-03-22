@@ -1,8 +1,12 @@
 # autogen .gitignore github.com
-assets/*
+
+# TODO(annad): Check, we can delete it?
+# assets/*
 !assets/.gitignore
 protected/runtime/*
 !protected/runtime/.gitignore
+
+# TODO(annad): init database. scepcial script on php.
 protected/data/*.db
 themes/classic/views/
 
@@ -42,8 +46,5 @@ tests/_support/_generated
 /.vagrant
 
 #env vars.
-setup_var.bat
+setup_env.bat
 client_secret_292373252634-li1g8ehvgd21lddqj6fabv1965g0tn3c.apps.googleusercontent.com.json
-
-#logs
-kuforms.log
