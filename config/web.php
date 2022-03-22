@@ -16,11 +16,13 @@ $config = [
     'components' => [
         'request' => [
             'cookieValidationKey' => getenv('COOKIE-VALIDATION-KEY'),
+
             // TODO(annad): Check IP address Proxy Heroku.
             'trustedHosts' => [
-                '0.0.0.0/0',
+                getenv('REMOTE_ADDR'),
             ],
-            'ipHeaders' => [],
+            // 'ipHeaders' => [],
+            
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
