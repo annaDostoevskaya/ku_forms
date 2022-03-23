@@ -20,9 +20,10 @@ use yii\widgets\LinkPager;
 						<b><?= Html::encode("{$answer->answerer_name}") ?></b><br>
 						<h7><u style="opacity: .7;"><?= $answer->answerer_email ?></u></h7><br>
 					</div>
+					<br>
 					<div>
 						<div style="float: left;">
-							<a href=
+							<a class="btn btn-primary" href=
 							<?= 
 								Url::toRoute(['answers/show', 'id' => $answer->id]) 
 							?>>
@@ -30,7 +31,7 @@ use yii\widgets\LinkPager;
 							</a>
 						</div>
 						<div style="float: right;">
-							<a href=
+							<a class="btn btn-primary" href=
 							<?= 
 								Url::toRoute(['forms/', 'id' => $answer->id_form]) 
 							?>>

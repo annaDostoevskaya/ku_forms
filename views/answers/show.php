@@ -11,13 +11,13 @@ $answers = json_decode($answer->answer, $associate = true);
 	<div>
 		<h3><?= $form->subject ?></h3>
 		<div>
-			<p>
-				<h6>Form Author: <?= Html::encode($form->author_name) ?></h6>
-				<h6>Answer Author: <?= Html::encode($answer->answerer_name) ?></h6>
-				<h7 class="text-muted">Datetime of answer: <i><?= Html::encode($answer->datetime) ?></i></h7>
-			</p>
+			<div class="text-muted">
+				<b>Form Author: </b><?= Html::encode($form->author_name) ?><br>
+				<b>Answerer: </b><?= Html::encode($answer->answerer_name) ?><br>
+				<b>Date: </b><i><?= Html::encode($answer->datetime) ?></i><br>
+			</div><br>
 			<div>
-				<a href=
+				<a class="btn btn-primary" href=
 				<?= 
 					Url::toRoute(['forms/', 'id' => $form->id]) 
 				?>>
@@ -37,7 +37,8 @@ $answers = json_decode($answer->answer, $associate = true);
 		</thread>
 		<tbody>
 			<?php
-				for ($i = 0; $i < $form->questions_count; $i++) {
+				for ($i = 0; $i < $form->questions_count; $i++) 
+				{
 					echo '<tr>';
 						echo '<th ' . 'scope="row"' .'>' . Html::encode($i + 1) .'</th>';
 					    echo '<td>' . Html::encode($questions[$i]['content']) . '</td>';
