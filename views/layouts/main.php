@@ -33,7 +33,10 @@ AppAsset::register($this);
         'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
+            // 'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
+            'class' => 'navbar navbar-expand-md navbar-dark fixed-top',
+            // NOTE(annad): https://colorscheme.ru/#4E11Tw0w0w0w0
+            'style' => 'background-color: #5C2680;'
         ],
     ]);
     echo Nav::widget([

@@ -23,7 +23,7 @@ use yii\widgets\LinkPager;
 						<!-- TODO(annad): We must show subject form! -->
 						<label>Form Author:</label>
 						<b><?= Html::encode("{$form->author_name}") ?></b><br>
-						<h7><u style="opacity: .7;"><?= $form->author_email ?></u></h7><br>
+						<h7><u class="text-muted"><?= $form->author_email ?></u></h7><br>
 					</div>
 					<div>
 						<div style="float: right;">
