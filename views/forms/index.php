@@ -1,4 +1,6 @@
 <?php
+// TODO(annad): $this->title = *;
+//              (!!!) in all views/*
 use yii\helpers\Html;
 ?>
 
@@ -19,7 +21,7 @@ form_renderer\FormRenderer(); // TODO(annad): This should encapsulate the <div>(
             &copy; <?= Html::encode($form->author_name); ?><br>
             <u><?= Html::encode($form->author_email); ?></u>
         </h6>
-        <small>Date: <b><i><?= Html::encode($form->datetime); ?></i></b></small>
+        <small>Date: <b><i><?= Html::encode($form->date); ?></i></b></small>
     </div>
     <br>
     <!-- action link must be get from application function. If url manager change it? -->
@@ -29,7 +31,7 @@ form_renderer\FormRenderer(); // TODO(annad): This should encapsulate the <div>(
           <div>
             <?php
                 $questions_collection = json_decode($form->questions, $associate = true);
-                for ($i = 0; $i < $form->questions_count; $i++) {
+                for ($i = 0; $i < $form->questions_number; $i++) {
                     $question = $questions_collection[$i];
                     echo '<div class="form-group">';
                     echo '<label ' . 
@@ -52,8 +54,8 @@ form_renderer\FormRenderer(); // TODO(annad): This should encapsulate the <div>(
         <!-- Hidden tag for security CSRF-Attacks. -->
         <?= Html::hiddenInput(Yii::$app->request->csrfParam, Yii::$app->request->getCsrfToken()); ?><br>
         <input  type="hidden" 
-                name="questions_count"
-                value=<?= $form->questions_count; ?>>
+                name="questions_number"
+                value=<?= $form->questions_number; ?>>
         <input  type="hidden" 
                 name="idForm"
                 value=<?= $form->id; ?>>

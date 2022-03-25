@@ -10,10 +10,11 @@ use yii\data\Pagination;
 
 use yii\helpers\Url;
 
-use app\models\Answer;
-use app\models\Form;
+use app\models\Forms;
+use app\models\Answers;
 
 use DateTime;
+define('SQLITE_DATETIME_FORMAT', 'Y-m-d H:i:s');
 
 require_once __DIR__ . '/../core/google_auth.php';
 
@@ -44,7 +45,7 @@ class AnswersController extends Controller
 
     public function actionIndex()
     {
-        $answerQuery = Answer::find();
+        $answerQuery = Answers::find();
         
         $pagination = new Pagination(
             [
@@ -71,7 +72,7 @@ class AnswersController extends Controller
         $keys = array_keys($_POST);
         $values = array_values($_POST);
 
-        for($i = 0; $i < $_POST['questions_count']; $i++)
+        for($i = 0; $i < $_POST['questions_number']; $i++)
         {
             echo $keys[$i] . ' = ' . $values[ $i ] . '<br>';
             $answers[ $keys[$i] ] = $values[ $i ];
@@ -79,8 +80,8 @@ class AnswersController extends Controller
 
         $json_answers = json_encode($answers);
 
-        $answer_db = new Answer();
-        $answer_db->id_form = $_POST['idForm'];
+        $answer_db = new Answers();
+        $answer_db->form_id = $_POST['idForm'];
         
         $userinfo = google_auth\getGoogleUserInfo();
 
@@ -95,10 +96,12 @@ class AnswersController extends Controller
 
         $answer_db->answerer_name = $userinfo['username'];
         $answer_db->answerer_email = $userinfo['email'];
-        
+
         $date = new DateTime('now');
-        $answer_db->datetime = $date->format(DateTime::ATOM);
-        $answer_db->answer = $json_answers;
+        // NOTE(annad): We use SQLite time by default value for date, CURRENT_TIMESTAMP.
+        // TODO(annad): Check it...
+        $answer_db->date = $date->format(SQLITE_DATETIME_FORMAT);
+        $answer_db->answers = $json_answers;
 
         $answer_db->save();
 
@@ -112,11 +115,11 @@ class AnswersController extends Controller
 
     public function actionShow($id = 0)
     {
-        $answer = Answer::find()
+        $answer = Answers::find()
                     ->where(['id' => $id])
                     ->one();
-        $form = Form::find()
-                    ->where(['id' => $answer->id_form])
+        $form = Forms::find()
+                    ->where(['id' => $answer->form_id])
                     ->one();
 
         return $this->render('show', 

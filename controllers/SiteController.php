@@ -8,7 +8,10 @@ use yii\web\Controller;
 use yii\web\Cookie;
 
 use yii\filters\VerbFilter;
-use app\models\Form;
+
+use app\models\Forms;
+
+use app\models\Answers; // TODO(annad): Delete this!!
 
 use yii\data\Pagination;
 
@@ -41,7 +44,8 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        $query = Form::find();
+        // $answer = Answers::findOne(0); TODO(annad): use it (!!!);
+        $query = Forms::find();
 
         $pagination = new Pagination(
             [

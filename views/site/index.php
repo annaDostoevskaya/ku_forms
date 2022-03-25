@@ -17,7 +17,7 @@ use yii\widgets\LinkPager;
 						</b>
 					</h6>
 				</label><br>
-				<i><?= Html::encode("{$form->datetime}") ?></i>
+				<i><?= Html::encode("{$form->date}") ?></i>
 				<h6>
 					<div>
 						<!-- TODO(annad): We must show subject form! -->

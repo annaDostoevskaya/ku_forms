@@ -3,7 +3,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 $questions = json_decode($form->questions, $associate = true);
-$answers = json_decode($answer->answer, $associate = true);
+$answers = json_decode($answer->answers, $associate = true);
 ?>
 
 
@@ -14,7 +14,7 @@ $answers = json_decode($answer->answer, $associate = true);
 			<div class="text-muted">
 				<b>Form Author: </b><?= Html::encode($form->author_name) ?><br>
 				<b>Answerer: </b><?= Html::encode($answer->answerer_name) ?><br>
-				<b>Date: </b><i><?= Html::encode($answer->datetime) ?></i><br>
+				<b>Date: </b><i><?= Html::encode($answer->date) ?></i><br>
 			</div><br>
 			<div>
 				<a class="btn btn-primary" href=
@@ -37,7 +37,7 @@ $answers = json_decode($answer->answer, $associate = true);
 		</thread>
 		<tbody>
 			<?php
-				for ($i = 0; $i < $form->questions_count; $i++) 
+				for ($i = 0; $i < $form->questions_number; $i++) 
 				{
 					echo '<tr>';
 						echo '<th ' . 'scope="row"' .'>' . Html::encode($i + 1) .'</th>';

@@ -4,7 +4,7 @@ namespace app\controllers;
 use Yii;
 use yii\web\Controller;
 
-use app\models\Form;
+use app\models\Forms;
 
 require_once __DIR__ . '/../core/google_auth.php';
 
@@ -40,7 +40,7 @@ class FormsController extends Controller
         }
 
 
-        $query = Form::find();
+        $query = Forms::find();
         $form = $query->where(['id' => $id])->one();
         
 		return $this->render('index', ['form' => $form]);

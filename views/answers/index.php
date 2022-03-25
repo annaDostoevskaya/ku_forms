@@ -12,7 +12,7 @@ use yii\widgets\LinkPager;
 				<label><h6><b>
 					<?= $answer->id ?>.
 				</b></h6></label>
-				<i><?= Html::encode("{$answer->datetime}") ?></i>
+				<i><?= Html::encode("{$answer->date}") ?></i>
 				<h6>
 					<div>
 						<!-- TODO(annad): We must show subject form! -->
@@ -33,7 +33,7 @@ use yii\widgets\LinkPager;
 						<div style="float: right;">
 							<a class="btn btn-primary" href=
 							<?= 
-								Url::toRoute(['forms/', 'id' => $answer->id_form]) 
+								Url::toRoute(['forms/', 'id' => $answer->form_id]) 
 							?>>
 								Go to Form!
 							</a>
