@@ -22,7 +22,6 @@ $this->title = 'KUForms - Main';
 				<i><?= Html::encode("{$form->date}") ?></i>
 				<h6>
 					<div>
-						<!-- TODO(annad): We must show subject form! -->
 						<label>Form Author:</label>
 						<b><?= Html::encode("{$form->author_name}") ?></b><br>
 						<h7><u class="text-muted"><?= $form->author_email ?></u></h7><br>
@@ -43,5 +42,17 @@ $this->title = 'KUForms - Main';
 		<?php endforeach; ?>
 		</ul>
 	</div>
-	<?= LinkPager::widget(['pagination' => $pagination]) ?>
+    <div >
+        <?= 
+            LinkPager::widget([
+                'pagination' => $pagination,
+                'linkOptions' => [
+                    'class' => 'page-link'
+                ],
+                'disabledPageCssClass' => 'page-link',
+                // centring it....
+                // change >> on Previous or any.
+            ]) 
+        ?>
+    </div>
 </div>

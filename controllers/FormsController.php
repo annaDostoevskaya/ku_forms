@@ -54,5 +54,4 @@ class FormsController extends Controller
 		return $this->render('index', ['form' => $form]);
 	}
 }
-
 ?>
