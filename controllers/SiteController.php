@@ -1,19 +1,14 @@
 <?php
 namespace app\controllers;
 
-
-
 use Yii;
 use yii\web\Controller;
 use yii\web\Cookie;
-
 use yii\filters\VerbFilter;
+use yii\data\Pagination;
+use yii\helpers\Url;
 
 use app\models\Forms;
-
-use app\models\Answers; // TODO(annad): Delete this!!
-
-use yii\data\Pagination;
 
 require_once __DIR__ . '/../core/google_auth.php';
 
@@ -66,16 +61,21 @@ class SiteController extends Controller
         );
     }
 
-    public function actionLogin()
+    public function actionLogin($future = '')
     {
         $payload = google_auth\checkJWTGoogle();
         if($payload != E_WARNING)
         {
             Yii::info("[ANNAD] Cookies is set.", __METHOD__);
-            return $this->redirect(Yii::$app->homeUrl, 302)->send();
+            return $this->redirect(Url::home(), 302)->send();
         }
 
         $client = google_auth\getGoogleClient();
+        if($future != '')
+        {
+            $client->setState($future);
+        }
+
         $urlAuth = $client->createAuthUrl();
         $this->redirect($urlAuth, 302)->send();
     }
@@ -83,11 +83,11 @@ class SiteController extends Controller
     public function actionLogout()
     {
         unset(Yii::$app->response->cookies[getenv('GOOGLE-NAME-COOKIE-STORAGING-JWT')]);
-        return $this->redirect(Yii::$app->homeUrl, 302)->send();
+        return $this->redirect(Url::home(), 302)->send();
     }
 
     // In GET req. storage auth-code from google side. (code = authGoogleCode)
-    public function actionOauthCallback($code = 0)
+    public function actionOauthCallback($code = 0, $state = '')
     {
         if(!$code) {
             // TODO(annad): Error handling.
@@ -106,6 +106,10 @@ class SiteController extends Controller
         
         $cookies->add($cookieIdToken);
 
-        return $this->redirect(Yii::$app->homeUrl, 302)->send();
+        if($state != '')
+        {
+            return $this->redirect(Url::to([$state]), 302)->send();
+        }
+        return $this->redirect(Url::home(), 302)->send();
     }
 }

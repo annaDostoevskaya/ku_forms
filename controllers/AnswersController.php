@@ -88,7 +88,7 @@ class AnswersController extends Controller
         if($userinfo == E_WARNING)
         {
             return $this->redirect( 
-                Url::toRoute(
+                Url::to(
                     ['site/login']
                 ), 
                 302  )->send();
@@ -106,7 +106,7 @@ class AnswersController extends Controller
         $answer_db->save();
 
         return $this->redirect( 
-                Url::toRoute(
+                Url::to(
                     ['answers/']
                 ), 
                 302  )->send();

@@ -29,7 +29,7 @@ use yii\widgets\LinkPager;
 						<div style="float: right;">
 							<a class="btn btn-primary" href=
 							<?= 
-								Url::toRoute(['forms/', 'id' => $form->id]) 
+								Url::to(['forms/', 'id' => $form->id])
 							?>>
 								Go to Form!
 							</a>

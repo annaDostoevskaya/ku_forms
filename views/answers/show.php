@@ -19,7 +19,7 @@ $answers = json_decode($answer->answers, $associate = true);
 			<div>
 				<a class="btn btn-primary" href=
 				<?= 
-					Url::toRoute(['forms/', 'id' => $form->id]) 
+					Url::to(['forms/', 'id' => $form->id]) 
 				?>>
 					Go To Form!
 				</a>

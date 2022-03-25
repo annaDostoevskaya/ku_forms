@@ -1,12 +1,12 @@
 #!/usr/bin/env php
 <?php
 
-function console_log($message) 
-{
-    $STDERR = fopen("php://stderr", "w");
-    fwrite($STDERR, $message."\n");
-    fclose($STDERR);
-}
+// function console_log($message) 
+// {
+//     $STDERR = fopen("php://stderr", "w");
+//     fwrite($STDERR, $message."\n");
+//     fclose($STDERR);
+// }
 
 
 // Script for initialize database with defaults variable and tables.
@@ -23,8 +23,8 @@ if(!is_dir('protected/data'))
 
 if(is_file('protected/data/kuforms.db'))
 {
-    console_log('[dbinit.php] Database already exists!');
-    exit(0);
+    // console_log('[dbinit.php] Database already exists!');
+    exit(-1);
 }
 
 $db = new PDO('sqlite:' . __DIR__ . '/protected/data/kuforms.db');
@@ -121,5 +121,5 @@ $db->exec("
     );
 ");
 
-console_log('[dbinit.php] Database initialized!');
+// console_log('[dbinit.php] Database initialized!');
 ?>

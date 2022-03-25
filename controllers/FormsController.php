@@ -3,6 +3,7 @@ namespace app\controllers;
 
 use Yii;
 use yii\web\Controller;
+use yii\helpers\Url;
 
 use app\models\Forms;
 
@@ -35,10 +36,17 @@ class FormsController extends Controller
         if($payload == E_WARNING)
         {
             // TODO(annad): Are you want be Anonymous?..
-            // TODO(annad): future='_link' Implement return to startup redirected link.
-            return $this->redirect('/index.php?r=site/login', 302)->send();
-        }
+            $future = Url::to([
+                Url::current()
+            ]);
 
+            $urlTo = Url::to([
+                'site/login', 
+                'future' => $future
+            ]);
+
+            return $this->redirect($urlTo, 302)->send();
+        }
 
         $query = Forms::find();
         $form = $query->where(['id' => $id])->one();

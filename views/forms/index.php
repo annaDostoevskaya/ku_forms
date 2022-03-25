@@ -2,6 +2,7 @@
 // TODO(annad): $this->title = *;
 //              (!!!) in all views/*
 use yii\helpers\Html;
+use yii\helpers\Url;
 ?>
 
 <?php
@@ -24,8 +25,7 @@ form_renderer\FormRenderer(); // TODO(annad): This should encapsulate the <div>(
         <small>Date: <b><i><?= Html::encode($form->date); ?></i></b></small>
     </div>
     <br>
-    <!-- action link must be get from application function. If url manager change it? -->
-    <form action="/index.php?r=answers/save"
+    <form action="<?= Url::to(['answers/save']) ?>"
           method="post" 
           autocomplete="on">
           <div>

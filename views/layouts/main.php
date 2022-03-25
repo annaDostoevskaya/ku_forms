@@ -62,7 +62,7 @@ AppAsset::register($this);
                 . Html::endForm()
                 . '</li>'
             ) : ( 
-                ['label' => 'Login with Google', 'url' => ['/site/login']] // TODO(annad): method = 'post'
+                ['label' => 'Login with Google', 'url' => ['/site/login', 'future' => Url::current() ]]
             ),
 
             ['label' => 'Answers', 'url' => ['/answers/index']],
