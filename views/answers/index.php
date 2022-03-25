@@ -2,6 +2,8 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\LinkPager;
+
+$this->title = 'KUForms - Answers';
 ?>
 <div>
 	<h3>Answers</h3>

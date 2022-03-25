@@ -1,8 +1,8 @@
 <?php
-// TODO(annad): $this->title = *;
-//              (!!!) in all views/*
 use yii\helpers\Html;
 use yii\helpers\Url;
+
+$this->title = 'KUForms - ' . $form->subject;
 ?>
 
 <?php

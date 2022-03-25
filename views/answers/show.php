@@ -2,6 +2,8 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 
+$this->title = 'KUForms - Answers';
+
 $questions = json_decode($form->questions, $associate = true);
 $answers = json_decode($answer->answers, $associate = true);
 ?>
