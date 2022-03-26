@@ -10,24 +10,18 @@
 
 
 // Script for initialize database with defaults variable and tables.
-
-if(!is_dir('protected'))
+if(!is_dir('web/protected/data'))
 {
-    mkdir('protected');
+    mkdir('web/protected/data');
 }
 
-if(!is_dir('protected/data'))
-{
-    mkdir('protected/data');
-}
-
-if(is_file('protected/data/kuforms.db'))
+if(is_file('web/protected/data/kuforms.db'))
 {
     // console_log('[dbinit.php] Database already exists!');
     exit(-1);
 }
 
-$db = new PDO('sqlite:' . __DIR__ . '/protected/data/kuforms.db');
+$db = new PDO('sqlite:' . __DIR__ . '/web/protected/data/kuforms.db');
 $db->exec('PRAGMA foreign_keys = ON;');
 
 

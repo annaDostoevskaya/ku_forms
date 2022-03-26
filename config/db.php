@@ -2,7 +2,7 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'sqlite:' . __DIR__ . '/../protected/data/kuforms.db', 
+    'dsn' => 'sqlite:' . __DIR__ . '/../web/protected/data/kuforms.db', 
     'username' => 'root',
     'password' => '',
     'charset' => 'utf8',
