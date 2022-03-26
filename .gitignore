@@ -1,12 +1,10 @@
 # autogen .gitignore github.com
 
-# TODO(annad): Check, we can delete it?
 # assets/*
 !assets/.gitignore
 protected/runtime/*
 !protected/runtime/.gitignore
 
-# TODO(annad): init database. scepcial script on php.
 protected/data/*.db
 themes/classic/views/
 

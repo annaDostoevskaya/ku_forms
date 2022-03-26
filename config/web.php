@@ -16,7 +16,7 @@ $config = [
     'components' => [
         'request' => [
             'cookieValidationKey' => getenv('COOKIE-VALIDATION-KEY'),
-            // TODO(annad): Check IP address Proxy Heroku. 03/21/2022
+            // NOTE(annad): Check IP address Proxy Heroku. 03/21/2022
                 // UPDATE(03/21/2022): Heroku storage IP address of Proxy server 
                 // in REMOTE_ADDR environment variable. 
                 // I set it on trustedHost, but I unknow, how it's work with IPv6,
